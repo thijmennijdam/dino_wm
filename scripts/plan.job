@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=plan_point_maze
+#SBATCH --nodes=1
+#SBATCH --gpus=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --partition=gpu_a100
+#SBATCH --time=02:00:00
+#SBATCH --output=./slurms/plan/%x-%j.out
+
+set -euo pipefail
+
+module purge
+module load 2023
+module load Anaconda3/2023.07-2
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/tnijdam/.mujoco/mujoco210/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia
+export DATASET_DIR=/projects/prjs1574/dino_wm/data
+
+export PYTHONUNBUFFERED=1
+
+source activate dino_wm_uv
+
+
+uv run python plan.py --config-name plan_point_maze

@@ -1,6 +1,6 @@
 defaults:
   - _self_
-  - env: point_maze
+  - env: pusht
   - encoder: dino 
   - action_encoder: proprio
   - proprio_encoder: proprio

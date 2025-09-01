@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --partition=rome
+#SBATCH --time=01:00:00
+#SBATCH --output=./slurms/%x-%j.out
+
+# unzip /projects/prjs1574/dino_wm/data/deformable_full.zip -d /projects/prjs1574/dino_wm/data/
+# unzip /projects/prjs1574/dino_wm/data/point_maze.zip -d /projects/prjs1574/dino_wm/data/
+# unzip /projects/prjs1574/dino_wm/data/wall_single.zip -d /projects/prjs1574/dino_wm/data/
+# unzip /projects/prjs1574/dino_wm/data/pusht_noise.zip -d /projects/prjs1574/dino_wm/data/
+
+
+# unzip /projects/prjs1574/dino_wm/data/pusht_noise.zip -d /projects/prjs1574/dino_wm/data/
+
+
+
+# unzip /projects/prjs1574/dino_wm/dump/old_zips/outputs.zip -d /projects/prjs1574/dino_wm/
