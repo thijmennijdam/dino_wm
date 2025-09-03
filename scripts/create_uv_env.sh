@@ -1,5 +1,9 @@
-conda env create -f environment_uv.yaml
+module load 2023
+module load Anaconda3/2023.07-2
 
+
+conda env create -f environment_uv.yaml
+source activate dino_wm_uv_test
 #  then activte and
 uv pip install -r requirements.txt
 

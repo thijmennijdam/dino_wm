@@ -1,0 +1,44 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --partition=genoa
+#SBATCH --time=01:00:00
+#SBATCH --output=./slurms/create_environment/%x-%j.out
+
+module load 2023
+module load Anaconda3/2023.07-2
+
+# Create and activate conda environment
+conda env create -f environment_uv.yaml
+source activate dino_wm_uv_test
+
+# Speed up installs by using micromamba
+conda install -c conda-forge -y micromamba
+
+# We need glew to fix error with mujoco
+micromamba install -c conda-forge glew
+
+# Install requirements via uv
+uv pip install -r requirements.txt
+
+# Setup Mujoco
+mkdir -p ~/.mujoco
+wget -nc https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz -P ~/.mujoco/
+cd ~/.mujoco
+tar -xzf mujoco210-linux-x86_64.tar.gz
+
+# Add exports to ~/.bashrc if not already there
+BASHRC="$HOME/.bashrc"
+
+if ! grep -Fxq "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$HOME/.mujoco/mujoco210/bin" "$BASHRC"; then
+    echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$HOME/.mujoco/mujoco210/bin" >> "$BASHRC"
+fi
+
+if ! grep -Fxq "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/usr/lib/nvidia" "$BASHRC"; then
+    echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/usr/lib/nvidia" >> "$BASHRC"
+fi
+
+if ! grep -Fxq "export DATASET_DIR=/projects/prjs1574/dino_wm/data" "$BASHRC"; then
+    echo "export DATASET_DIR=/projects/prjs1574/dino_wm/data" >> "$BASHRC"
+fi

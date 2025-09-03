@@ -5,7 +5,6 @@ module load Anaconda3/2023.07-2
 
 source activate dino_wm_uv
 
+uv run python plan.py --config-name plan_pusht
+
 uv run python plan.py --config-name plan_point_maze
-
-
-# uv run python plan.py --config-name plan_pusht
